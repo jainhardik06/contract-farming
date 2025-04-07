@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AgriChain Secure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">AgriChain Secure</a>
+            <div>
+                <span id="connectionStatus" class="connection-status">Status: Disconnected</span>
+                <button id="connectWallet" class="btn btn-nav">Connect Wallet</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>DApp Dashboard</h1>
+            <p id="walletAddress">Wallet: Not Connected</p>
+        </div>
+    </header>
+
+    <main class="dashboard-main container">
+
+        <!-- Connection Prompt -->
+        <div id="connectPrompt" class="connect-prompt">
+             <i class="fas fa-plug icon-large"></i>
+             <h2>Connect Your Wallet</h2>
+             <p>Please connect your MetaMask wallet and switch to the Sepolia Testnet to interact with the DApp.</p>
+             <button id="connectWalletPromptBtn" class="btn btn-primary">Connect Wallet</button>
+        </div>
+
+        <!-- DApp Content (Shown after connection) -->
+        <div id="dappContent" class="dapp-content hidden">
+            <section id="createContractSection" class="dashboard-section card">
+                <h2><i class="fas fa-plus-circle icon-green"></i> Create New Contract</h2>
+                <form id="contractForm">
+                    <div class="form-group">
+                        <label for="cropDetails">Crop Details:</label>
+                        <input type="text" id="cropDetails" placeholder="e.g., Organic Wheat, 10 tons" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyerAddress">Buyer's Ethereum Address:</label>
+                        <input type="text" id="buyerAddress" placeholder="0x..." required pattern="^0x[a-fA-F0-9]{40}$" title="Enter a valid Ethereum address">
+                    </div>
+                     <div class="form-group">
+                        <label for="amount">Payment Amount (ETH):</label>
+                        <input type="number" id="amount" placeholder="e.g., 1.5" step="any" min="0" required>
+                    </div>
+                    <button type="submit" id="createContractBtn" class="btn btn-primary">
+                        <span class="btn-text">Create Contract</span>
+                        <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                    <p id="createStatus" class="status-message"></p>
+                </form>
+            </section>
+
+            <section id="existingContractsSection" class="dashboard-section">
+                <h2><i class="fas fa-list-alt icon-green"></i> Existing Contracts</h2>
+                <div id="contractsList" class="contracts-grid">
+                    <!-- Contracts will be dynamically added here as cards -->
+                     <div id="loadingContracts" class="loading-indicator">
+                         <i class="fas fa-spinner fa-spin"></i> Loading Contracts...
+                     </div>
+                     <p id="noContractsMessage" class="info-message hidden">No contracts found.</p>
+                </div>
+                <p id="loadErrorContracts" class="error-message hidden">Could not load contracts. Ensure you are connected to Sepolia.</p>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+             <p>© <span id="currentYearDash"></span> AgriChain Secure. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Transaction Status Modal (Optional but recommended) -->
+    <div id="txStatusModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3 id="modalTitle">Transaction Status</h3>
+            <p id="modalMessage">Please wait...</p>
+            <div id="modalLoader" class="spinner"><i class="fas fa-spinner fa-spin"></i></div>
+            <a id="modalTxLink" href="#" target="_blank" rel="noopener noreferrer" class="hidden">View on Etherscan</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYearDash').textContent = new Date().getFullYear();
+
+        // Basic Modal Control (Example - enhance in script.js)
+        const modal = document.getElementById('txStatusModal');
+        const closeButton = document.querySelector('.close-button');
+        closeButton.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
