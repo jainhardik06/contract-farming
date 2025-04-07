@@ -193,18 +193,3 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 Please ensure your code adheres to standard practices and includes relevant updates to documentation.
 
 ---
-
-## License ⚖️
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-<!-- Or replace MIT with your chosen license -->
-
----
-
-## Contact 📧
-
-[Your Name / Organisation Name] - [your.email@example.com]
-
-Project Link: [https://github.com/[Your-GitHub-Username]/[Your-Repo-Name]](https://github.com/[Your-GitHub-Username]/[Your-Repo-Name])
-
----
