@@ -1,0 +1,219 @@
+/* --- Admin Dashboard Specific Styles --- */
+.admin-main {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.admin-title {
+    text-align: center;
+    color: var(--dark-green);
+    margin-bottom: 40px;
+    font-size: 2.4rem;
+}
+
+/* Stats Grid */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.stat-card {
+    background-color: var(--bg-light);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    border-left: 5px solid var(--primary-green);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+.stat-icon {
+    font-size: 2.8rem;
+    color: var(--primary-green);
+    margin-bottom: 15px;
+}
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--dark-green);
+    line-height: 1.1;
+}
+.stat-label {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Admin Section Styling */
+.admin-section {
+    background-color: var(--bg-light);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    margin-bottom: 40px;
+}
+
+.admin-section-title {
+    font-size: 1.7rem;
+    color: var(--dark-green);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-green);
+    display: flex;
+    align-items: center;
+}
+.admin-section-title i {
+    margin-right: 12px;
+    color: var(--primary-green);
+}
+
+/* Admin Table Styling */
+.admin-table-container {
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+}
+
+.admin-user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.admin-user-table thead {
+    background-color: var(--light-green);
+}
+.admin-user-table th,
+.admin-user-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+.admin-user-table th {
+    font-weight: 600;
+    color: var(--dark-green);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.admin-user-table tbody tr:hover {
+    background-color: #f5fef5; /* Subtle hover effect */
+}
+.admin-user-table td {
+    font-size: 0.95rem;
+}
+
+/* Role Badges */
+.role-badge {
+    padding: 4px 10px;
+    border-radius: 12px; /* Pill shape */
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.role-admin {
+    background-color: var(--accent-color); /* Yellow */
+    color: var(--text-color);
+    border: 1px solid #ffb300;
+}
+.role-user {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+    border: 1px solid var(--primary-green);
+}
+
+/* Action Buttons */
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin-right: 5px;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+.btn-edit { color: var(--primary-green); }
+.btn-edit:hover { color: var(--dark-green); }
+.btn-delete { color: #E57373; } /* Reddish */
+.btn-delete:hover { color: #c62828; }
+
+/* General Admin Button */
+.btn-secondary { /* Define a secondary button style */
+    background-color: #757575; /* Grey */
+    color: var(--light-text);
+    padding: 10px 20px;
+}
+.btn-secondary:hover {
+    background-color: #424242;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.btn-secondary i { margin-right: 8px; }
+
+.admin-note {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* --- Animations for Admin (reuse or add more) --- */
+/* Use existing .animate-fade-in-up and delays */
+.animate-fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease-out forwards; /* Slightly faster? */
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+
+/* Navbar Adjustments needed in styles.css (Add these) */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ensure container takes full width */
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Spacing between items */
+}
+.welcome-message {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}
+.btn-logout {
+    border-color: #f44336; /* Red border for logout */
+    color: #f44336;
+    padding: 6px 12px; /* Smaller padding */
+}
+.btn-logout:hover {
+    background-color: #f44336;
+    color: var(--light-text);
+}
+.btn-logout i { margin-right: 5px; }
+
+
+@media (max-width: 767px) {
+    .navbar-container { flex-direction: column; align-items: flex-start; }
+    .navbar-right { width: 100%; margin-top: 10px; justify-content: space-between; }
+    .admin-stats-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+    .stat-card { padding: 20px; }
+    .stat-icon { font-size: 2rem; }
+    .stat-value { font-size: 1.8rem; }
+    .admin-title { font-size: 1.8rem; }
+    .admin-section-title { font-size: 1.4rem; }
+}

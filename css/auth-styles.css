@@ -1,0 +1,220 @@
+/* --- Auth Page Specific Styles --- */
+.auth-body {
+    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; /* Add padding for smaller screens */
+}
+
+.auth-container {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    display: flex;
+    max-width: 900px; /* Max width of the auth box */
+    width: 100%;   /* Ensure it takes available width up to max-width */
+    animation-duration: 0.7s; /* Sync with JS if needed */
+    animation-timing-function: ease-out;
+}
+
+.auth-form-section {
+    padding: 40px 50px;
+    flex: 1; /* Take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation-duration: 0.8s;
+    animation-delay: 0.2s; /* Delay form animation */
+    animation-fill-mode: backwards; /* Start from hidden state */
+}
+
+.auth-image-section {
+    flex: 1; /* Take available space */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 300px; /* Ensure visibility on small screens */
+    animation-duration: 0.8s;
+    animation-delay: 0.1s;
+    animation-fill-mode: backwards; /* Start from hidden state */
+}
+.auth-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    color: var(--light-text);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+.auth-image-overlay h3 {
+    color: var(--light-text);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+.auth-image-overlay p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+
+.auth-logo {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center; /* Center logo in the form section */
+}
+
+.auth-title {
+    text-align: center;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    font-size: 1.9rem;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.auth-form .form-group {
+    margin-bottom: 25px; /* More space between fields */
+    position: relative; /* For icon positioning */
+}
+
+.auth-form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: flex; /* Align icon and text */
+    align-items: center;
+}
+
+.icon-prefix {
+    margin-right: 10px;
+    color: var(--primary-green);
+    width: 16px; /* Fixed width for alignment */
+    text-align: center;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form select { /* Style select dropdown */
+    width: 100%;
+    padding: 12px 15px 12px 15px; /* Adjust padding if icon is inside */
+    /* padding-left: 40px; */ /* Add padding if icon is absolutely positioned inside */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+/* Style select dropdown arrow */
+.auth-form select {
+    appearance: none; /* Remove default arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E"); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 40px; /* Make space for arrow */
+}
+
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #555;
+}
+.auth-switch a {
+    font-weight: 600;
+    color: var(--primary-green);
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Auth Error/Success Message Styling */
+#loginError, #signupError {
+    margin-bottom: 15px;
+    text-align: left; /* Align text left within the box */
+    padding: 12px 15px;
+}
+#signupSuccess {
+     margin-bottom: 15px;
+     text-align: left;
+     padding: 12px 15px;
+     background-color: var(--light-green);
+     color: var(--dark-green);
+     border: 1px solid var(--primary-green);
+     border-radius: var(--border-radius);
+}
+
+
+/* Responsive adjustments for auth pages */
+@media (max-width: 767px) {
+    .auth-container {
+        flex-direction: column;
+        margin: 20px; /* Add margin */
+    }
+    .auth-form-section {
+        padding: 30px 25px;
+        order: 2; /* Form below image */
+    }
+    .auth-image-section {
+        order: 1; /* Image above form */
+        min-height: 200px; /* Reduce height */
+    }
+     .auth-logo { margin-bottom: 20px; font-size: 1.8rem;}
+     .auth-title { font-size: 1.6rem; }
+     .auth-subtitle { font-size: 0.9rem; margin-bottom: 20px; }
+}
+
+/* --- Animation Keyframes (Can be in styles.css too) --- */
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slide-in-left { animation-name: slideInLeft; }
+.animate-slide-in-right { animation-name: slideInRight; }
+
+/* Ensure fade-in from styles.css works */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}

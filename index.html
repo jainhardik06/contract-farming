@@ -9,10 +9,17 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<!-- In the <nav> section of index.html -->
     <nav class="navbar">
-        <div class="container">
+        <div class="container navbar-container"> <!-- Use the container class -->
             <a href="index.html" class="logo">AgriChain Secure</a>
-            <a href="dashboard.html" class="btn btn-nav">Launch DApp</a>
+            <div class="navbar-right" id="navbarAuthLinks">
+                <!-- Links will be dynamically added by JS -->
+                 <!-- Example: <a href="login.html" class="btn btn-nav">Login</a> -->
+                 <!-- Example: <a href="signup.html" class="btn btn-nav">Sign Up</a> -->
+                 <!-- Example: <a href="user-dashboard.html" class="btn btn-nav">Go to Dashboard</a> -->
+                 <!-- Example: <button id="indexLogoutButton" class="btn btn-nav btn-logout">Logout</button> -->
+            </div>
         </div>
     </nav>
 
@@ -20,7 +27,7 @@
         <div class="container hero-content">
             <h1 class="animate-fade-in-up">Revolutionizing Agriculture with Blockchain</h1>
             <p class="animate-fade-in-up delay-1">Secure, transparent, and efficient contract farming powered by Ethereum.</p>
-            <a href="dashboard.html" class="btn btn-primary animate-fade-in-up delay-2">Get Started Now</a>
+            <a href="user-dashboard.html" class="btn btn-primary animate-fade-in-up delay-2">Get Started Now</a>
             <div class="hero-image animate-fade-in delay-3">
                 <img src="https://www.nadcab.com/public/images/agriculture-blockchain/blockchain-in-agriculture.png" alt="Blockchain and Agriculture Illustration"> <!-- Placeholder: Add a relevant SVG/image -->
             </div>
@@ -95,7 +102,7 @@
             <div class="container text-center">
                 <h2 class="section-title-light">Ready to Secure Your Contracts?</h2>
                 <p class="section-subtitle-light">Join the future of agriculture technology today.</p>
-                <a href="dashboard.html" class="btn btn-light animate-on-scroll">Go to Dashboard</a>
+                <a href="user-dashboard.html" class="btn btn-light animate-on-scroll">Go to Dashboard</a>
             </div>
         </section>
 
@@ -140,54 +147,133 @@
         </div>
     </footer>
 
-    <script>
-        // Simple Accordion for FAQ
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const answer = item.querySelector('.faq-answer');
-                const currentlyActive = document.querySelector('.faq-item.active');
+        <!-- Include the auth script first to make functions available -->
+        <script src="js/auth.js"></script>
 
-                if (currentlyActive && currentlyActive !== item) {
-                    currentlyActive.classList.remove('active');
-                    currentlyActive.querySelector('.faq-answer').style.maxHeight = 0;
+        <!-- Inline script for index.html specific logic -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // --- 1. Update Navbar based on login status ---
+                const navbarAuthLinks = document.getElementById('navbarAuthLinks');
+                if (navbarAuthLinks) {
+                    // These variables rely on sessionStorage potentially set by auth.js
+                    const isLoggedIn = sessionStorage.getItem('userLoggedIn') === 'true';
+                    const userRole = sessionStorage.getItem('userRole');
+    
+                    navbarAuthLinks.innerHTML = ''; // Clear existing links/buttons
+    
+                    if (isLoggedIn) {
+                        // User is logged in - Show Dashboard and Logout
+                        const dashboardLink = document.createElement('a');
+                        dashboardLink.href = userRole === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+                        dashboardLink.className = 'btn btn-nav';
+                        dashboardLink.textContent = 'Go to Dashboard';
+                        navbarAuthLinks.appendChild(dashboardLink);
+    
+                        const logoutBtn = document.createElement('button');
+                        logoutBtn.id = 'indexLogoutButton'; // Can be useful for specific styling/targeting
+                        logoutBtn.className = 'btn btn-nav btn-logout'; // Apply button styling
+                        logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout'; // Add icon
+                        // IMPORTANT: Assumes handleLogout is defined globally by auth.js or correctly imported if using modules
+                        logoutBtn.addEventListener('click', handleLogout);
+                        navbarAuthLinks.appendChild(logoutBtn);
+    
+                    } else {
+                        // User is not logged in - Show Login and Sign Up
+                        const loginLink = document.createElement('a');
+                        loginLink.href = 'login.html';
+                        loginLink.className = 'btn btn-nav';
+                        loginLink.textContent = 'Login';
+                        navbarAuthLinks.appendChild(loginLink);
+    
+                        const signupLink = document.createElement('a');
+                        signupLink.href = 'signup.html';
+                        // Consider using a different style? e.g., 'btn btn-primary' or keep as 'btn btn-nav'
+                        signupLink.className = 'btn btn-nav';
+                        signupLink.textContent = 'Sign Up';
+                        navbarAuthLinks.appendChild(signupLink);
+                    }
+                } // End of navbar update logic
+    
+                // --- 2. Simple Accordion for FAQ ---
+                const faqItems = document.querySelectorAll('.faq-item');
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question');
+                    if (question) { // Check if question element exists
+                        question.addEventListener('click', () => {
+                            const answer = item.querySelector('.faq-answer');
+                            const currentlyActive = document.querySelector('.faq-item.active');
+    
+                            // Collapse currently active item if it's not the one being clicked
+                            if (currentlyActive && currentlyActive !== item) {
+                                currentlyActive.classList.remove('active');
+                                const activeAnswer = currentlyActive.querySelector('.faq-answer');
+                                if (activeAnswer) activeAnswer.style.maxHeight = '0'; // Use string '0'
+                            }
+    
+                            // Toggle the clicked item
+                            item.classList.toggle('active');
+                            if (item.classList.contains('active')) {
+                                if (answer) answer.style.maxHeight = answer.scrollHeight + "px";
+                            } else {
+                                if (answer) answer.style.maxHeight = '0'; // Use string '0'
+                            }
+                        });
+                    }
+                }); // End of FAQ logic
+    
+                // --- 3. Simple Scroll Animation Trigger ---
+                const scrollElements = document.querySelectorAll(".animate-on-scroll");
+    
+                // Helper function to check if element is in view
+                const elementInView = (el, dividend = 1) => {
+                    if (!el) return false; // Guard clause
+                    const elementTop = el.getBoundingClientRect().top;
+                    // Check if element top is within the viewport (adjust dividend for earlier/later trigger)
+                    return (
+                        elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+                    );
+                };
+    
+                // Helper function to add the 'in-view' class
+                const displayScrollElement = (element) => {
+                     if(element) element.classList.add("in-view");
+                };
+    
+                // Optional: Helper function to remove the class if scrolled back up
+                const hideScrollElement = (element) => {
+                     if(element) element.classList.remove("in-view");
+                };
+    
+                // Main handler for scroll animation
+                const handleScrollAnimation = () => {
+                    scrollElements.forEach((el) => {
+                        if (elementInView(el, 1.25)) { // Trigger when element is 1/1.25% up the screen
+                            displayScrollElement(el);
+                        }
+                        // Uncomment below to remove animation class when scrolling back up
+                        // else {
+                        //     hideScrollElement(el);
+                        // }
+                    });
+                };
+    
+                // Attach scroll event listener
+                window.addEventListener("scroll", handleScrollAnimation);
+    
+                // Trigger animation check once on load for elements already in view
+                handleScrollAnimation();
+                // End of Scroll Animation logic
+    
+                // --- 4. Set current year in footer ---
+                const currentYearSpan = document.getElementById('currentYear');
+                if (currentYearSpan) {
+                    currentYearSpan.textContent = new Date().getFullYear();
                 }
-
-                item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                } else {
-                    answer.style.maxHeight = 0;
-                }
-            });
-        });
-
-        // Simple Scroll Animation Trigger
-        const scrollElements = document.querySelectorAll(".animate-on-scroll");
-        const elementInView = (el, dividend = 1) => {
-            const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-            );
-        };
-        const displayScrollElement = (element) => { element.classList.add("in-view"); };
-        const hideScrollElement = (element) => { element.classList.remove("in-view"); };
-
-        const handleScrollAnimation = () => {
-            scrollElements.forEach((el) => {
-                if (elementInView(el, 1.25)) { displayScrollElement(el); }
-                // else { hideScrollElement(el); } // Optional: remove class if scrolled back up
-            })
-        }
-        window.addEventListener("scroll", () => { handleScrollAnimation(); });
-        // Trigger once on load for elements already in view
-        handleScrollAnimation();
-
-
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-    </script>
+                // End of Footer Year logic
+    
+            }); // End of DOMContentLoaded listener
+        </script>
     <!-- Placeholder for image source -->
     <!-- Create an 'images' folder and add an illustration like 'hero-illustration.svg' -->
      <!-- Example source for illustrations: undraw.co -->

@@ -3,41 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - AgriChain Secure</title>
+    <title>User Dashboard - AgriChain Secure</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Add dashboard-specific styles if needed -->
+    <!-- <link rel="stylesheet" href="css/dashboard-styles.css"> -->
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
+        <div class="container navbar-container"> <!-- Added class for potential flex styling -->
             <a href="index.html" class="logo">AgriChain Secure</a>
-            <div>
+            <div class="navbar-right">
+                <span id="welcomeUser" class="welcome-message">Welcome, User!</span> <!-- Display username -->
                 <span id="connectionStatus" class="connection-status">Status: Disconnected</span>
                 <button id="connectWallet" class="btn btn-nav">Connect Wallet</button>
+                <button id="logoutButton" class="btn btn-nav btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
     </nav>
 
-    <header class="dashboard-header">
+    <!-- This header might be redundant if using the navbar fully, keep or remove as desired -->
+    <!-- <header class="dashboard-header">
         <div class="container">
             <h1>DApp Dashboard</h1>
             <p id="walletAddress">Wallet: Not Connected</p>
         </div>
-    </header>
+    </header> -->
 
     <main class="dashboard-main container">
 
-        <!-- Connection Prompt -->
-        <div id="connectPrompt" class="connect-prompt">
+        <!-- Wallet Address Display (Moved here for better visibility) -->
+         <div class="wallet-display-area animate-fade-in-up delay-1">
+            <p id="walletAddress">Wallet: Not Connected</p>
+        </div>
+
+        <!-- Connection Prompt (Same as before) -->
+        <div id="connectPrompt" class="connect-prompt animate-fade-in-up delay-2">
              <i class="fas fa-plug icon-large"></i>
              <h2>Connect Your Wallet</h2>
-             <p>Please connect your MetaMask wallet and switch to the Sepolia Testnet to interact with the DApp.</p>
+             <p>Please connect your MetaMask wallet (Sepolia Testnet) to interact with contracts.</p>
              <button id="connectWalletPromptBtn" class="btn btn-primary">Connect Wallet</button>
         </div>
 
-        <!-- DApp Content (Shown after connection) -->
-        <div id="dappContent" class="dapp-content hidden">
+        <!-- DApp Content (Same structure as before, wrapped for animation) -->
+        <div id="dappContent" class="dapp-content hidden animate-fade-in-up delay-3">
             <section id="createContractSection" class="dashboard-section card">
                 <h2><i class="fas fa-plus-circle icon-green"></i> Create New Contract</h2>
                 <form id="contractForm">
@@ -57,14 +67,14 @@
                         <span class="btn-text">Create Contract</span>
                         <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
                     </button>
-                    <p id="createStatus" class="status-message"></p>
+                    <p id="createStatus" class="status-message hidden"></p> <!-- Ensure hidden initially -->
                 </form>
             </section>
 
             <section id="existingContractsSection" class="dashboard-section">
                 <h2><i class="fas fa-list-alt icon-green"></i> Existing Contracts</h2>
                 <div id="contractsList" class="contracts-grid">
-                    <!-- Contracts will be dynamically added here as cards -->
+                    <!-- Contracts will be dynamically added here -->
                      <div id="loadingContracts" class="loading-indicator">
                          <i class="fas fa-spinner fa-spin"></i> Loading Contracts...
                      </div>
@@ -82,7 +92,7 @@
         </div>
     </footer>
 
-    <!-- Transaction Status Modal (Optional but recommended) -->
+    <!-- Transaction Status Modal (Same as before) -->
     <div id="txStatusModal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
@@ -93,23 +103,36 @@
         </div>
     </div>
 
+    <!-- JS ORDER MATTERS: Load Web3 first, then your DApp logic, then auth logic -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js"></script> <!-- Your existing DApp script -->
+    <script src="js/auth.js"></script> <!-- Auth script for session check and logout -->
     <script>
-        // Set current year in footer
-        document.getElementById('currentYearDash').textContent = new Date().getFullYear();
+        // Initialize Auth Check on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth('user'); // Check if user is logged in, expects 'user' role
 
-        // Basic Modal Control (Example - enhance in script.js)
-        const modal = document.getElementById('txStatusModal');
-        const closeButton = document.querySelector('.close-button');
-        closeButton.onclick = function() {
-            modal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            // Set current year in footer
+            const currentYearDash = document.getElementById('currentYearDash');
+            if(currentYearDash) currentYearDash.textContent = new Date().getFullYear();
+
+            // Basic Modal Control (Example - enhance in script.js if needed)
+            const modal = document.getElementById('txStatusModal');
+            const closeButton = document.querySelector('.close-button');
+            if(modal && closeButton) {
+                closeButton.onclick = function() {
+                    modal.style.display = "none";
+                }
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
             }
-        }
+
+            // Call initial DApp setup IF wallet was previously connected (from script.js)
+            // This part is handled within script.js's load event listener
+        });
     </script>
 </body>
 </html>
