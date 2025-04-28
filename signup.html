@@ -1,64 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - AgriChain Secure</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/auth-styles.css">
-</head>
-<body class="auth-body">
-    <div class="auth-container animate-fade-in">
-         <div class="auth-image-section animate-slide-in-left" style="background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
-             <!-- Image via CSS background -->
-             <div class="auth-image-overlay">
-                 <h3>Join the Future of Agriculture</h3>
-                 <p>Create your account in seconds.</p>
-             </div>
-        </div>
-        <div class="auth-form-section animate-slide-in-right">
-            <a href="index.html" class="logo auth-logo">AgriChain Secure</a>
-            <h2 class="auth-title">Create Your Account</h2>
-            <p class="auth-subtitle">Get started with decentralized contracts.</p>
-
-            <form id="signupForm" class="auth-form">
-                 <div id="signupError" class="error-message hidden">Could not create account. Please try again.</div>
-                 <div id="signupSuccess" class="success-message hidden">Account created! Redirecting to login...</div> <!-- Added Success Message -->
-                <div class="form-group">
-                    <label for="name"><i class="fas fa-user icon-prefix"></i>Full Name</label>
-                    <input type="text" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope icon-prefix"></i>Email Address</label>
-                    <input type="email" id="email" placeholder="you@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-lock icon-prefix"></i>Password</label>
-                    <input type="password" id="password" placeholder="Create a strong password" required>
-                </div>
-                 <div class="form-group">
-                    <label for="confirmPassword"><i class="fas fa-check-circle icon-prefix"></i>Confirm Password</label>
-                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
-                </div>
-                <!-- Optional: Role selection (for simulation) -->
-                <div class="form-group">
-                     <label for="role"><i class="fas fa-users-cog icon-prefix"></i>Role (Select 'User' for now)</label>
-                     <select id="role" class="form-control"> <!-- Reused some styling -->
-                         <option value="user" selected>User (Farmer/Buyer)</option>
-                         <option value="admin">Admin (Simulated)</option>
-                     </select>
-                </div>
-                <button type="submit" class="btn btn-primary btn-auth">
-                    <span class="btn-text">Sign Up</span>
-                    <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
-                </button>
-            </form>
-            <p class="auth-switch">Already have an account? <a href="login.html">Log In</a></p>
-        </div>
+<form id="signupForm" class="auth-form" action="php/auth.php" method="POST">
+    <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" placeholder="Your Name" required>
     </div>
-
-    <script src="js/auth.js"></script>
-</body>
-</html>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Create a strong password" required>
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select name="role" required>
+            <option value="user" selected>User</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+    <button type="submit" name="signup">Sign Up</button>
+</form>
