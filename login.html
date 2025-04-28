@@ -1,11 +1,99 @@
-<form id="loginForm" class="auth-form" action="php/auth.php" method="POST">
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" name="email" placeholder="Email" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgriChain Secure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link the main stylesheet FIRST -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Link a NEW stylesheet for auth-specific styles SECOND -->
+    <link rel="stylesheet" href="css/auth-styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Animated Background Shapes (Optional) -->
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+
+        <div class="auth-box animate-fade-in-scale"> <!-- Added animation -->
+             <!-- Logo or Branding -->
+             <a href="index.html" class="auth-logo-link">
+                 <!-- Replace with your actual logo image if you have one -->
+                 <span class="auth-logo-text">AgriChain Secure</span>
+                 <!-- Example image: <img src="images/logo-green.png" alt="AgriChain Secure Logo" class="auth-logo"> -->
+             </a>
+
+            <h2>Welcome Back!</h2>
+            <p class="auth-subtitle">Login to access your dashboard.</p>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form" action="php/auth.php" method="POST">
+                <!-- Add animation delays for staggering effect -->
+                <div class="form-group animate-field" style="animation-delay: 0.2s;">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                         <i class="fas fa-envelope input-icon"></i>
+                         <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="form-group animate-field" style="animation-delay: 0.4s;">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                     </div>
+                </div>
+                <button type="submit" name="login" class="btn btn-primary btn-block animate-field" style="animation-delay: 0.6s;">Login</button>
+            </form>
+
+            <!-- Area to display messages -->
+            <div id="messageArea" class="message-area"></div>
+
+            <p class="auth-switch animate-field" style="animation-delay: 0.8s;">
+                Don't have an account? <a href="signup.html">Sign Up Now</a>
+            </p>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password" required>
-    </div>
-    <button type="submit" name="login">Login</button>
-</form>
+
+    <!-- Keep the script for handling URL messages -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const messageArea = document.getElementById('messageArea');
+            if (!messageArea) return;
+
+            const params = new URLSearchParams(window.location.search);
+            let messageText = '';
+            let messageClass = ''; // Will be 'success-message' or 'error-message'
+
+            if (params.has('signup') && params.get('signup') === 'success') {
+                 messageText = 'Signup successful! Please log in.';
+                 messageClass = 'success-message';
+            } else if (params.has('logout') && params.get('logout') === 'success') {
+                 messageText = 'You have been logged out.';
+                 messageClass = 'success-message';
+            } else if (params.has('error')) {
+                 const errorType = params.get('error');
+                 const errorMessages = {
+                    'empty_fields': 'Please fill in all required fields.',
+                    'invalid_credentials': 'Invalid email or password provided.',
+                    'db_error': 'A database error occurred. Please try again later.',
+                    'invalid_action': 'Invalid action attempted.',
+                    'default': 'An unknown error occurred. Please try again.'
+                 };
+                 messageText = errorMessages[errorType] || errorMessages['default'];
+                 messageClass = 'error-message';
+            }
+
+            if (messageText) {
+                messageArea.textContent = messageText;
+                messageArea.className = `message-area ${messageClass}`; // Apply styling class
+                // Add animation class to make message appear nicely
+                messageArea.classList.add('animate-message');
+            }
+        });
+    </script>
+</body>
+</html>

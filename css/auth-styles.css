@@ -1,220 +1,323 @@
-/* --- Auth Page Specific Styles --- */
-.auth-body {
-    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+/* ========================================= */
+/*          css/auth-styles.css            */
+/*     (Combined for Login & Signup)       */
+/* ========================================= */
+
+/* Use variables defined in styles.css */
+
+body.auth-page { /* Add class="auth-page" to body tag if needed, or apply directly to body */
+    background: linear-gradient(135deg, var(--light-green) 0%, var(--bg-color) 100%);
+    /* Or a subtle background image */
+    /* background-image: url('../images/subtle-pattern.png'); */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px; /* Add padding for smaller screens */
+    overflow: hidden; /* Hide overflow for bg shapes */
 }
 
 .auth-container {
-    background-color: var(--bg-light);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
+    position: relative; /* For positioning background shapes */
+    width: 100%;
     display: flex;
-    max-width: 900px; /* Max width of the auth box */
-    width: 100%;   /* Ensure it takes available width up to max-width */
-    animation-duration: 0.7s; /* Sync with JS if needed */
-    animation-timing-function: ease-out;
-}
-
-.auth-form-section {
-    padding: 40px 50px;
-    flex: 1; /* Take available space */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    animation-duration: 0.8s;
-    animation-delay: 0.2s; /* Delay form animation */
-    animation-fill-mode: backwards; /* Start from hidden state */
-}
-
-.auth-image-section {
-    flex: 1; /* Take available space */
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    min-height: 300px; /* Ensure visibility on small screens */
-    animation-duration: 0.8s;
-    animation-delay: 0.1s;
-    animation-fill-mode: backwards; /* Start from hidden state */
-}
-.auth-image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    color: var(--light-text);
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 40px 20px;
+}
+
+/* --- Background Animated Shapes (Optional) --- */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary-green), var(--dark-green));
+    opacity: 0.15;
+    filter: blur(10px);
+    animation: float 15s infinite ease-in-out alternate;
+}
+
+.shape-1 { width: 250px; height: 250px; top: 10%; left: 15%; animation-duration: 17s; }
+.shape-2 { width: 180px; height: 180px; bottom: 15%; right: 20%; animation-duration: 14s; animation-delay: 2s; }
+.shape-3 { width: 120px; height: 120px; top: 40%; right: 10%; animation-duration: 16s; animation-delay: 4s; }
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+    100% { transform: translateY(0px) rotate(360deg); }
+}
+
+
+/* --- Authentication Box --- */
+.auth-box {
+    background-color: var(--bg-light);
+    padding: 40px 50px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    max-width: 450px;
+    width: 100%;
     text-align: center;
-    padding: 30px;
-}
-.auth-image-overlay h3 {
-    color: var(--light-text);
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-}
-.auth-image-overlay p {
-    font-size: 1.1rem;
-    opacity: 0.9;
+    position: relative; /* Ensure it's above shapes */
+    z-index: 2;
+    border-top: 5px solid var(--primary-green);
+    overflow: hidden; /* Clip animations if needed */
 }
 
-
-.auth-logo {
-    font-size: 2rem;
+/* --- Logo/Branding --- */
+.auth-logo-link {
+    display: inline-block;
     margin-bottom: 25px;
-    text-align: center; /* Center logo in the form section */
+    text-decoration: none;
 }
+.auth-logo-text {
+    font-size: 2rem; /* Matches .logo in styles.css */
+    font-weight: 700;
+    color: var(--primary-green);
+    transition: color 0.3s ease;
+}
+.auth-logo-link:hover .auth-logo-text {
+    color: var(--dark-green);
+}
+/* If using an image logo: */
+/* .auth-logo { max-width: 150px; height: auto; } */
 
-.auth-title {
-    text-align: center;
+.auth-box h2 {
     color: var(--dark-green);
     margin-bottom: 10px;
-    font-size: 1.9rem;
+    font-size: 1.8rem;
 }
 
 .auth-subtitle {
-    text-align: center;
     color: #666;
     margin-bottom: 30px;
     font-size: 1rem;
 }
 
+/* --- Form Styling --- */
+.auth-form {
+    margin-top: 30px;
+}
+
 .auth-form .form-group {
-    margin-bottom: 25px; /* More space between fields */
-    position: relative; /* For icon positioning */
+    margin-bottom: 25px;
+    text-align: left;
+    position: relative; /* Needed for input icon */
 }
 
 .auth-form label {
+    display: block;
+    margin-bottom: 8px;
     font-weight: 600;
     font-size: 0.9rem;
-    margin-bottom: 8px;
-    display: flex; /* Align icon and text */
-    align-items: center;
+    color: var(--text-color);
 }
 
-.icon-prefix {
-    margin-right: 10px;
-    color: var(--primary-green);
-    width: 16px; /* Fixed width for alignment */
-    text-align: center;
+.input-wrapper {
+    position: relative;
 }
 
-.auth-form input[type="text"],
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+    z-index: 1; /* Ensure icon is potentially above input bg */
+}
+
+/* General Input Styling (Text, Email, Password) */
 .auth-form input[type="email"],
 .auth-form input[type="password"],
-.auth-form select { /* Style select dropdown */
+.auth-form input[type="text"] { /* Added input[type="text"] */
     width: 100%;
-    padding: 12px 15px 12px 15px; /* Adjust padding if icon is inside */
-    /* padding-left: 40px; */ /* Add padding if icon is absolutely positioned inside */
+    padding: 12px 15px 12px 45px; /* Add padding for icon */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 1rem;
+    font-family: var(--font-family);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.auth-form input:focus,
-.auth-form select:focus {
-    outline: none;
-    border-color: var(--primary-green);
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    background-color: var(--bg-light); /* Ensure consistent background */
+    color: var(--text-color); /* Ensure consistent text color */
 }
 
-/* Style select dropdown arrow */
+/* General Input Focus Styling */
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="text"]:focus { /* Added input[type="text"] */
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
+
+/* Placeholder Styling */
+.auth-form input::placeholder {
+    color: #bbb;
+    font-size: 0.95rem;
+}
+
+/* --- Select Dropdown Styling (for Signup) --- */
 .auth-form select {
-    appearance: none; /* Remove default arrow */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E"); /* Custom arrow */
+    width: 100%;
+    padding: 12px 40px 12px 45px; /* Adjust padding for icon and arrow */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    background-color: var(--bg-light); /* Match input background */
+    color: var(--text-color); /* Match input text color */
+    appearance: none; /* Remove default system arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+
+    /* Custom Arrow using SVG */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Green arrow */
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 20px;
-    padding-right: 40px; /* Make space for arrow */
 }
 
+/* Focus style for select */
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
 
-.btn-auth {
+/* Style disabled option in select */
+.auth-form select option[disabled] {
+    color: #aaa;
+}
+
+/* General Icon color change on wrapper focus (works for input and select) */
+.auth-form .input-wrapper:focus-within .input-icon {
+     color: var(--primary-green);
+}
+
+/* Submit Button Styling */
+.auth-form button[type="submit"] {
     width: 100%;
-    padding: 14px;
+    margin-top: 15px;
+    padding: 14px; /* Slightly larger button */
     font-size: 1.1rem;
-    margin-top: 10px;
-    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+    /* Inherits .btn and .btn-primary from styles.css */
+    transition: all 0.3s ease; /* Ensure smooth transitions */
 }
 
-.auth-switch {
+.auth-form button[type="submit"]:hover {
+    /* styles.css already handles hover, can add more here if needed */
+     letter-spacing: 0.5px;
+}
+
+/* --- Message Area --- */
+.message-area {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
     text-align: center;
-    margin-top: 25px;
+    /* Initially hidden until content added */
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
+}
+
+.message-area.animate-message {
+    /* Animation trigger class added by JS */
+    opacity: 1;
+    max-height: 100px; /* Adjust as needed */
+    padding: 12px; /* Ensure padding is applied */
+}
+
+.message-area.success-message {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+    border: 1px solid var(--primary-green);
+}
+
+.message-area.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* --- Switch Link (Login/Signup) --- */
+.auth-switch {
+    margin-top: 30px;
     font-size: 0.95rem;
     color: #555;
 }
+
 .auth-switch a {
-    font-weight: 600;
     color: var(--primary-green);
-}
-.auth-switch a:hover {
+    font-weight: 600;
     text-decoration: underline;
 }
 
-/* Auth Error/Success Message Styling */
-#loginError, #signupError {
-    margin-bottom: 15px;
-    text-align: left; /* Align text left within the box */
-    padding: 12px 15px;
-}
-#signupSuccess {
-     margin-bottom: 15px;
-     text-align: left;
-     padding: 12px 15px;
-     background-color: var(--light-green);
-     color: var(--dark-green);
-     border: 1px solid var(--primary-green);
-     border-radius: var(--border-radius);
+.auth-switch a:hover {
+    color: var(--dark-green);
+    text-decoration: none;
 }
 
 
-/* Responsive adjustments for auth pages */
-@media (max-width: 767px) {
-    .auth-container {
-        flex-direction: column;
-        margin: 20px; /* Add margin */
-    }
-    .auth-form-section {
-        padding: 30px 25px;
-        order: 2; /* Form below image */
-    }
-    .auth-image-section {
-        order: 1; /* Image above form */
-        min-height: 200px; /* Reduce height */
-    }
-     .auth-logo { margin-bottom: 20px; font-size: 1.8rem;}
-     .auth-title { font-size: 1.6rem; }
-     .auth-subtitle { font-size: 0.9rem; margin-bottom: 20px; }
-}
+/* --- Animations --- */
 
-/* --- Animation Keyframes (Can be in styles.css too) --- */
-@keyframes slideInLeft {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-.animate-slide-in-left { animation-name: slideInLeft; }
-.animate-slide-in-right { animation-name: slideInRight; }
-
-/* Ensure fade-in from styles.css works */
-.animate-fade-in {
+/* Box Entrance Animation */
+.animate-fade-in-scale {
     opacity: 0;
-    animation: fadeIn 0.5s ease-out forwards;
+    transform: scale(0.95) translateY(20px);
+    animation: fadeInScale 0.7s 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
-@keyframes fadeIn {
-    to { opacity: 1; }
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Staggered Field Entrance Animation */
+.animate-field {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fieldSlideUp 0.5s ease-out forwards;
+}
+
+@keyframes fieldSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 500px) {
+    .auth-box {
+        padding: 30px 25px;
+        max-width: 90%;
+    }
+    .auth-box h2 { font-size: 1.6rem; }
+    .auth-subtitle { font-size: 0.9rem; margin-bottom: 25px; }
+
+    /* Adjust input/select padding and icon position */
+    .auth-form input[type="email"],
+    .auth-form input[type="password"],
+    .auth-form input[type="text"],
+    .auth-form select {
+        padding: 10px 10px 10px 40px; /* Consistent padding */
+        font-size: 0.95rem;
+    }
+    /* Ensure select arrow position is okay on mobile */
+     .auth-form select {
+         background-position: right 10px center;
+         padding-right: 35px; /* Ensure space for arrow */
+     }
+
+    .auth-form button[type="submit"] { font-size: 1rem; padding: 12px; }
+    .input-icon { left: 12px; font-size: 0.9em;} /* Move icon slightly */
+    .shape-1 { width: 150px; height: 150px; }
+    .shape-2 { width: 100px; height: 100px; }
+    .shape-3 { width: 80px; height: 80px; }
 }

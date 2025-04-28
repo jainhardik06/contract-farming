@@ -57,7 +57,13 @@ if (isset($_POST['login'])) {
 // Handle Logout
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: ../login.html");
+    header("Location: ../index.html"); // Correct path to the root directory
     exit();
 }
+header("Location: ../index.html");
 ?>
+<script>
+    function logout() {
+        window.location.href = 'auth.php?logout=true';
+    }
+</script>
